@@ -8,6 +8,7 @@ class QrTextArea
     @downloadLink = $ @downloadLink
     @timer = null
 
+    @loadPathName()
     @update()
     @textArea.keydown @keydown
 
@@ -18,6 +19,7 @@ class QrTextArea
   update: =>
     @generateQr()
     @updateLink()
+    @updateURL()
 
   generateQr: =>
     @qrCodeArea.empty()
@@ -27,5 +29,11 @@ class QrTextArea
     @downloadLink.attr 'download', "#{@clean(@textArea.val())}.png"
     @downloadLink.attr 'href', @qrCodeArea.find('canvas')[0].toDataURL('image/png')
 
+  updateURL: =>
+    window.history.replaceState 'state', @textArea.val(), "/#{@textArea.val()}"
+
   clean: (string) =>
     string.replace(/^\w+:\/\//, '').replace(/\//, '_').replace(/:/, '').substring(0, 50)
+
+  loadPathName: =>
+    @textArea.val window.location.pathname.replace(/^\//, '')
