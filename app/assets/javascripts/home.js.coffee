@@ -14,7 +14,7 @@ class QrTextArea
 
   keydown: =>
     clearTimeout @timer
-    @timer = setTimeout @update, 400
+    @timer = setTimeout @update, 250
 
   update: =>
     @generateQr()
@@ -26,7 +26,7 @@ class QrTextArea
     @qrCodeArea.qrcode @textArea.val()
 
   updateLink: =>
-    @downloadLink.attr 'download', "#{@clean(@textArea.val())}.png"
+    @downloadLink.attr 'download', "#{@clean(@textArea.val()) || 'qrcode'}.png"
     @downloadLink.attr 'href', @qrCodeArea.find('canvas')[0].toDataURL('image/png')
 
   updateURL: =>
