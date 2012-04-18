@@ -23,7 +23,9 @@ class QrTextArea
 
   generateQr: =>
     @qrCodeArea.empty()
-    @qrCodeArea.qrcode @textArea.val()
+    @qrCodeArea.qrcode
+      text: @textArea.val()
+      correctLevel: QRErrorCorrectLevel.L
 
   updateLink: =>
     @downloadLink.attr 'download', "#{@clean(@textArea.val()) || 'qrcode'}.png"
