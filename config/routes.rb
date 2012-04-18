@@ -1,3 +1,3 @@
 IWantAQrCode::Application.routes.draw do
-  root :to => 'home#index'
+  match '(*text)' => 'home#index'
 end

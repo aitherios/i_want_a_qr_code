@@ -1,3 +1,31 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+$ ->
+  new QrTextArea '#text', '#qrcode', '#download'
+
+class QrTextArea
+  constructor: (@textArea, @qrCodeArea, @downloadLink) ->
+    @textArea = $ @textArea
+    @qrCodeArea = $ @qrCodeArea
+    @downloadLink = $ @downloadLink
+    @timer = null
+
+    @update()
+    @textArea.keydown @keydown
+
+  keydown: =>
+    clearTimeout @timer
+    @timer = setTimeout @update, 400
+
+  update: =>
+    @generateQr()
+    @updateLink()
+
+  generateQr: =>
+    @qrCodeArea.empty()
+    @qrCodeArea.qrcode @textArea.val()
+
+  updateLink: =>
+    @downloadLink.attr 'download', "#{@clean(@textArea.val())}.png"
+    @downloadLink.attr 'href', @qrCodeArea.find('canvas')[0].toDataURL('image/png')
+
+  clean: (string) =>
+    string.replace(/^\w+:\/\//, '').replace(/\//, '_').replace(/:/, '').substring(0, 50)

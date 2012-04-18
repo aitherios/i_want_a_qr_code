@@ -13,4 +13,5 @@
 //= require plugins
 //= require jquery
 //= require jquery_ujs
+//= require jquery.qrcode.min
 //= require_tree .
