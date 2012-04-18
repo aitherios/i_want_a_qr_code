@@ -38,4 +38,4 @@ class QrTextArea
     string.replace(/^\w+:\/\//, '').replace(/\//, '_').replace(/:/, '').substring(0, 50)
 
   loadPathName: =>
-    @textArea.val window.location.pathname.replace(/^\//, '')
+    @textArea.val unescape(window.location.pathname.replace(/^\//, ''))
