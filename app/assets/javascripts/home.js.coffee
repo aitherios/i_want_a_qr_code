@@ -10,16 +10,17 @@ class QrTextArea
 
     @loadPathName()
     @update()
-    @textArea.keydown @keydown
+    @textArea.keydown @setTimer
+    @textArea.change @setTimer
 
-  keydown: =>
+  setTimer: =>
     clearTimeout @timer
     @timer = setTimeout @update, 250
 
   update: =>
+    @updateURL()
     @generateQr()
     @updateLink()
-    @updateURL()
 
   generateQr: =>
     @qrCodeArea.empty()
